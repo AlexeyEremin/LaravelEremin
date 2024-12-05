@@ -16,11 +16,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    # Защищаем только ID от изменений, на другие нам похер
+    # fillable будет только ебать мозги что ты ему не разрешил что то менять
+    protected $guarded = ['id'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -33,9 +31,9 @@ class User extends Authenticatable
     ];
 
     public function role()
-        {
-            return $this->belongsTo(Role::class);
-        }
+    {
+        return $this->belongsTo(Role::class);
+    }
 
 
     /**
@@ -47,6 +45,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            # Тут у тебя автоматическоое шифрования пароля!
             'password' => 'hashed',
         ];
     }

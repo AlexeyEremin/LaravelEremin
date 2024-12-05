@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')->default(1)->constrained('roles')->after('password');
+            # Данный метод автоматически создаст верный тип данных и наименование твоего поля role_id
+            $table->foreignIdFor(\App\Models\Role::class)->default(1)->constrained()->after('password');
         });
     }
 
@@ -22,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropForeignIdFor(\App\Models\Role::class);
         });
     }
 };
